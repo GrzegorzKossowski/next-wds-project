@@ -11,9 +11,10 @@ export const userTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
   clerkUserId: text().notNull().unique(),
   email: text().notNull(),
+  emailVerified: timestamp({ withTimezone: true }),
   name: text().notNull(),
   role: userRoleEnum().notNull().default("user"),
-  imageUrl: text(),
+  image: text(),
   deletedAt: timestamp({ withTimezone: true }),
   ...timestamps,
 });

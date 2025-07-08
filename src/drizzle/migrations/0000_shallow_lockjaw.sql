@@ -3,6 +3,20 @@ CREATE TYPE "public"."lesson_status" AS ENUM('public', 'private', 'preview');-->
 CREATE TYPE "public"."product_status" AS ENUM('public', 'private');--> statement-breakpoint
 CREATE TYPE "public"."section_status" AS ENUM('public', 'private');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('user', 'admin');--> statement-breakpoint
+CREATE TABLE "account" (
+	"userId" uuid NOT NULL,
+	"type" text NOT NULL,
+	"provider" text NOT NULL,
+	"providerAccountId" text NOT NULL,
+	"refresh_token" text,
+	"access_token" text,
+	"expires_at" integer,
+	"token_type" text,
+	"scope" text,
+	"id_token" text,
+	"session_state" text
+);
+--> statement-breakpoint
 CREATE TABLE "courses" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -36,7 +50,9 @@ CREATE TABLE "lessons" (
 	"youtubeVideoId" text NOT NULL,
 	"order" integer NOT NULL,
 	"status" "lesson_status" DEFAULT 'private' NOT NULL,
-	"sectionId" uuid NOT NULL
+	"sectionId" uuid NOT NULL,
+	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "products" (
@@ -84,9 +100,10 @@ CREATE TABLE "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"clerkUserId" text NOT NULL,
 	"email" text NOT NULL,
+	"emailVerified" timestamp with time zone,
 	"name" text NOT NULL,
 	"role" "user_role" DEFAULT 'user' NOT NULL,
-	"imageUrl" text,
+	"image" text,
 	"deletedAt" timestamp with time zone,
 	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
 	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
@@ -109,6 +126,7 @@ CREATE TABLE "users_to_courses_access" (
 	CONSTRAINT "users_to_courses_access_userId_courseId_pk" PRIMARY KEY("userId","courseId")
 );
 --> statement-breakpoint
+ALTER TABLE "account" ADD CONSTRAINT "account_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "courses_to_products" ADD CONSTRAINT "courses_to_products_courseId_courses_id_fk" FOREIGN KEY ("courseId") REFERENCES "public"."courses"("id") ON DELETE restrict ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "courses_to_products" ADD CONSTRAINT "courses_to_products_productId_products_id_fk" FOREIGN KEY ("productId") REFERENCES "public"."products"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "courses_to_sections" ADD CONSTRAINT "courses_to_sections_courseId_courses_id_fk" FOREIGN KEY ("courseId") REFERENCES "public"."courses"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

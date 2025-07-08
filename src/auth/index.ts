@@ -4,12 +4,17 @@ import NextAuth, { type User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 // import { DrizzleAdapter } from "@auth/drizzle-adapter";
 // import { db } from "../drizzle/db";
+// import { userTable } from "@/drizzle/schema";
+// import { accountsTable } from "@/drizzle/schema/accounts.schema";
 
-export const BASE_PATH = "/api/auth"
+export const BASE_PATH = "/api/auth";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   // adapter wymaga tabel user i session w DB
-  // adapter: DrizzleAdapter(db),
+  // adapter: DrizzleAdapter(db, {
+  //   usersTable: userTable,
+  //   accountsTable: accountsTable
+  // }),
   // session zastępuje bazę tymczasową
   session: {
     strategy: "jwt",
