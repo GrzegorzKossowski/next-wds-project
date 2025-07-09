@@ -26,7 +26,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     // Google,
     Credentials({
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "username" },
+        email: { label: "Email", type: "text", placeholder: "john@doe.com" },
         password: {
           label: "Password",
           type: "password",
@@ -37,10 +37,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         const users = [
           {
             id: "test-user-1",
-            userName: "test1",
-            name: "Test 1",
-            password: "pass",
-            email: "test1@donotreply.com",
+            userName: "John Doe",
+            name: "John Doe",
+            password: "123456",
+            email: "john@doe.com",
           },
           {
             id: "test-user-2",
@@ -52,7 +52,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         ];
         const user = users.find(
           (user) =>
-            user.userName === credentials.username &&
+            user.email === credentials.email &&
             user.password === credentials.password
         );
         return user
@@ -61,4 +61,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+    signOut: "/sign-up",
+    error: "/error",
+  },
 });
