@@ -1,4 +1,11 @@
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { timestamps } from "./columns.helpers";
 import { relations } from "drizzle-orm";
 import { userToCourseAccessTable } from "./userToCourse_access.schema";
@@ -9,10 +16,10 @@ export const userRoleEnum = pgEnum("user_role", userRoles);
 
 export const userTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
-  clerkUserId: text().notNull().unique(),
   email: text().notNull(),
   emailVerified: timestamp({ withTimezone: true }),
   name: text().notNull(),
+  password: varchar("password").notNull(),
   role: userRoleEnum().notNull().default("user"),
   image: text(),
   deletedAt: timestamp({ withTimezone: true }),

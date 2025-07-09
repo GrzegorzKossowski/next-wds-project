@@ -66,3 +66,10 @@ $ npx drizzle-kit migrate
 $ npx drizzle-kit studio
 
 ```
+
+Zrzucenie bazy (razem z enumami) z poziomu studio:
+
+```sql
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+```
