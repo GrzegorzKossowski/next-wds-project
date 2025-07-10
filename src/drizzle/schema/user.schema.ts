@@ -14,6 +14,10 @@ export const userRoles = ["user", "admin"] as const;
 export type UserRoleType = (typeof userRoles)[number];
 export const userRoleEnum = pgEnum("user_role", userRoles);
 
+export type SelectUserTableRow = typeof userTable.$inferSelect;
+export type InsertUserTableRow = typeof userTable.$inferInsert;
+
+
 export const userTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
   email: text().notNull(),

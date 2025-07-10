@@ -21,12 +21,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   // session zastępuje bazę tymczasową
   session: {
     strategy: "jwt",
-    // expires
-    maxAge: 5, // sec
+    maxAge: 10, // sec
+    updateAge: 10 // odśwież token po X aktywności
   },
   jwt: {
-    // expires
-    maxAge: 5, // sec
+    maxAge: 10, // sec
   },
   callbacks: {
     jwt({ token, user }) {

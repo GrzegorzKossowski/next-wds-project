@@ -1,6 +1,7 @@
 // https://authjs.dev/guides/pages/signin
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -13,7 +14,7 @@ export default function SignInPage() {
           "use server";
           try {
             await signIn("credentials", {
-              redirectTo: "/",
+              redirectTo: "/dashboard",
               ...Object.fromEntries(formData),
             });
           } catch (error) {
@@ -42,6 +43,9 @@ export default function SignInPage() {
         />
         <input type="submit" value="Sign In" />
       </form>
+      <div>
+        <Link href={"/sign-up"}> Jesteś nowy? </Link>
+      </div>
     </>
   );
 }
