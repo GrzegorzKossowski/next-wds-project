@@ -18,7 +18,27 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   // session zastępuje bazę tymczasową
   session: {
     strategy: "jwt",
+    // expires
+    maxAge: 5, // sec
   },
+  jwt: {
+    // expires
+    maxAge: 5, // sec
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        // User is available during sign-in
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id as string;
+      return session;
+    },
+  },
+
   basePath: BASE_PATH,
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
