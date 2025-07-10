@@ -1,11 +1,14 @@
+import { db } from "@/drizzle/db";
+import { userTable } from "@/drizzle/schema";
 import NextAuth, { type User } from "next-auth";
 // import GitHub from "next-auth/providers/github";
 // import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 // import { DrizzleAdapter } from "@auth/drizzle-adapter";
-// import { db } from "../drizzle/db";
 // import { userTable } from "@/drizzle/schema";
 // import { accountsTable } from "@/drizzle/schema/accounts.schema";
+import bcrypt from "bcrypt";
+import { eq } from "drizzle-orm";
 
 export const BASE_PATH = "/api/auth";
 
@@ -46,38 +49,40 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     // Google,
     Credentials({
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "john@doe.com" },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "password",
-        },
+        // email: { label: "Email", type: "text", placeholder: "john@doe.com" },
+        // password: {
+        //   label: "Password",
+        //   type: "password",
+        //   placeholder: "password",
+        // },
+        email: {},
+        password: {},
       },
       async authorize(credentials): Promise<User | null> {
-        const users = [
-          {
-            id: "test-user-1",
-            userName: "John Doe",
-            name: "John Doe",
-            password: "123456",
-            email: "john@doe.com",
-          },
-          {
-            id: "test-user-2",
-            userName: "test2",
-            name: "Test 2",
-            password: "pass",
-            email: "test2@donotreply.com",
-          },
-        ];
-        const user = users.find(
-          (user) =>
-            user.email === credentials.email &&
-            user.password === credentials.password
+        // Pobierz użytkownika z bazy danych po emailu
+        const dbUsers = await db
+          .select()
+          .from(userTable)
+          .where(eq(userTable.email, credentials.email as string))
+          .limit(1);
+        const user = dbUsers[0];
+
+        if (!user) return null;
+
+        // Porównaj hasło z zahashowanym hasłem w bazie
+        const passwordMatch = await bcrypt.compare(
+          credentials.password as string,
+          user.password
         );
-        return user
-          ? { id: user.id, name: user.name, email: user.email }
-          : null;
+
+        if (!passwordMatch) return null;
+
+        // Zwróć dane użytkownika zgodne z typem `User`
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
       },
     }),
   ],

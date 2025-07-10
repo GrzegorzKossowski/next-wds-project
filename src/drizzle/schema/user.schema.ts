@@ -7,8 +7,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { timestamps } from "./columns.helpers";
-import { relations } from "drizzle-orm";
-import { userToCourseAccessTable } from "./userToCourse_access.schema";
+// import { relations } from "drizzle-orm";
+// import { userToCourseAccessTable } from "./userToCourse_access.schema";
 
 export const userRoles = ["user", "admin"] as const;
 export type UserRoleType = (typeof userRoles)[number];
@@ -26,6 +26,6 @@ export const userTable = pgTable("users", {
   ...timestamps,
 });
 
-export const UserRelationship = relations(userTable, ({ many }) => ({
-  userToCourseAccess: many(userToCourseAccessTable),
-}));
+// export const UserRelationship = relations(userTable, ({ many }) => ({
+//   userToCourseAccess: many(userToCourseAccessTable),
+// }));
