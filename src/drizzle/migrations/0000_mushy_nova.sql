@@ -11,3 +11,11 @@ CREATE TABLE "users" (
 	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
 	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL
 );
+--> statement-breakpoint
+CREATE TABLE "posts" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"title" text NOT NULL,
+	"body" text NOT NULL,
+	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL
+);

@@ -1,13 +1,13 @@
 import React from "react";
 import PostWrapper from "./PostWrapper";
 
-export default async function InfinitePage() {
+export default function InfinitePage() {
   return (
-    <>
-      <div>Lista</div>
-      <div className="w-[350px]">
+    <div>
+      InfinitePage
+      <div>
         <PostWrapper />
       </div>
-    </>
+    </div>
   );
 }
