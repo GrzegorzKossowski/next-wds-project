@@ -7,11 +7,17 @@ import { PostCard } from "./PostCard";
 
 export default function PostWrapper() {
   const { ref, inView } = useInView();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    trpc.getInfinitePosts.useInfiniteQuery(
-      { limit: POST_PER_PAGE },
-      { getNextPageParam: (lastPage) => lastPage.nextCursor }
-    );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = trpc.getInfinitePosts.useInfiniteQuery(
+    { limit: POST_PER_PAGE },
+    { getNextPageParam: (lastPage) => lastPage.nextCursor }
+  );
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -23,6 +29,33 @@ export default function PostWrapper() {
 
   const posts = data?.pages.flatMap((page) => page.posts) ?? [];
 
+  // 🛠 STAN 1: Początkowe ładowanie
+  if (isLoading) {
+    return (
+      <div className="text-center py-10 text-xl text-gray-600 animate-pulse">
+        ⏳ Trwa ładowanie postów...
+      </div>
+    );
+  }
+
+  // 🛠 STAN 2: Błąd
+  if (isError) {
+    return (
+      <div className="text-center py-10 text-xl text-red-600">
+        ❌ Wystąpił błąd podczas ładowania postów.
+      </div>
+    );
+  }
+
+  // 🛠 STAN 3: Brak danych
+  if (posts.length === 0) {
+    return (
+      <div className="text-center py-10 text-xl text-gray-500">
+        😕 Brak dostępnych postów.
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl">Posty</h1>
@@ -32,10 +65,16 @@ export default function PostWrapper() {
         ))}
       </div>
       <div ref={ref} />
-      {isFetchingNextPage && <p>Ładowanie...</p>}
+      {/* 🛠 STAN 4: Dociąganie kolejnych postów */}
+      {isFetchingNextPage && (
+        <p className="text-center text-yellow-500 py-4 animate-pulse h-[100px] bg-pink-500 mb-7">
+          ⏬ Ładowanie kolejnych postów...
+        </p>
+      )}
+      {/* 🛠 STAN 5: Koniec listy */}
       {!hasNextPage && (
         <div className="w-full h-[300px] bg-amber-300 text-2xl flex justify-center items-center text-red-600 font-black">
-          No more posts...
+          🎉 Nic więcej nie ma...
         </div>
       )}
     </div>
