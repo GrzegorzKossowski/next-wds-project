@@ -27,7 +27,6 @@ export default async function Home() {
           Infinite Scroll
         </Link>
       </div>
-     
     </div>
   );
 }

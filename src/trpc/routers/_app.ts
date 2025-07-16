@@ -2,6 +2,7 @@ import { z } from "zod";
 import { baseProcedure, createTRPCRouter } from "../init.";
 import { postTable } from "@/drizzle/schema";
 import { db } from "@/drizzle/db";
+import { eq } from "drizzle-orm";
 
 export const appRouter = createTRPCRouter({
   getInfinitePosts: baseProcedure
@@ -26,6 +27,17 @@ export const appRouter = createTRPCRouter({
         posts: data,
         nextCursor,
       };
+    }),
+  getPostById: baseProcedure
+    .input(z.number().min(1).max(100))
+    .query(async ({ input }) => {
+      const id = input;
+      const data = await db
+        .select()
+        .from(postTable)
+        .where(eq(postTable.id, id))
+        .limit(1);
+      return data[0] || { error: "Brak postu" };
     }),
 });
 // export type definition of API
