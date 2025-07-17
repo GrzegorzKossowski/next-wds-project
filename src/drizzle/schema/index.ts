@@ -8,6 +8,7 @@
 // export * from './test.schema'
 export * from './user.schema'
 export * from './post.schema'
+export * from './polls.schema'
 // export * from './userLessonComplete.schema'
 // export * from './userToCourse_access.schema'
 

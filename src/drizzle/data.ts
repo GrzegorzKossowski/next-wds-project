@@ -1,3 +1,20 @@
+// polls data
+export const pollSeedData = [
+  {
+    title: "Jaki framework frontendowy preferujesz?",
+    options: ["React", "Vue", "Svelte", "Angular"],
+  },
+  {
+    title: "Jakiego systemu operacyjnego używasz na co dzień?",
+    options: ["Windows", "macOS", "Linux"],
+  },
+  {
+    title: "Czy korzystasz z TypeScript?",
+    options: ["Tak", "Nie"],
+  },
+];
+
+// post data
 export const data = [
   {
     title:
