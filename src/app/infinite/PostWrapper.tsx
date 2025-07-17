@@ -4,6 +4,7 @@ import { trpc } from "@/trpc/client";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { PostCard } from "./PostCard";
+import GramLoader from "../loader/GramLoader";
 
 export default function PostWrapper() {
   const { ref, inView } = useInView();
@@ -32,8 +33,11 @@ export default function PostWrapper() {
   // 🛠 STAN 1: Początkowe ładowanie
   if (isLoading) {
     return (
-      <div className="text-center py-10 text-xl text-gray-600 animate-pulse">
-        ⏳ Trwa ładowanie postów...
+      <div className="flex w-full justify-center">
+        <GramLoader />
+        <div className="text-center text-xl text-gray-600 animate-pulse">
+          ⏳ Trwa ładowanie postów...
+        </div>
       </div>
     );
   }
@@ -57,26 +61,28 @@ export default function PostWrapper() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl">Posty</h1>
-      <div className="grid gap-x-4 gap-y-8 grid-cols-1 md:grid-cols-3">
-        {posts.map((post) => (
-          <PostCard post={post} key={post.id} />
-        ))}
-      </div>
-      <div ref={ref} />
-      {/* 🛠 STAN 4: Dociąganie kolejnych postów */}
-      {isFetchingNextPage && (
-        <p className="text-center text-yellow-500 py-4 animate-pulse h-[100px] bg-pink-500 mb-7">
-          ⏬ Ładowanie kolejnych postów...
-        </p>
-      )}
-      {/* 🛠 STAN 5: Koniec listy */}
-      {!hasNextPage && (
-        <div className="w-full h-[300px] bg-amber-300 text-2xl flex justify-center items-center text-red-600 font-black">
-          🎉 Nic więcej nie ma...
+    <div className="relative">
+      <div className="space-y-6">
+        <h1 className="text-2xl">Posty</h1>
+        <div className="relative grid gap-x-4 gap-y-8 grid-cols-1 md:grid-cols-3">
+          {posts.map((post) => (
+            <PostCard post={post} key={post.id} />
+          ))}
         </div>
-      )}
+        <div ref={ref} />
+        {/* 🛠 STAN 4: Dociąganie kolejnych postów */}
+        {isFetchingNextPage && (
+          <p className="text-center text-yellow-500 py-4 animate-pulse h-[100px] bg-pink-500 mb-7">
+            ⏬ Ładowanie kolejnych postów...
+          </p>
+        )}
+        {/* 🛠 STAN 5: Koniec listy */}
+        {!hasNextPage && (
+          <div className="w-full h-[300px] bg-amber-300 text-2xl flex justify-center items-center text-red-600 font-black">
+            🎉 Nic więcej nie ma...
+          </div>
+        )}
+      </div>
     </div>
   );
 }
