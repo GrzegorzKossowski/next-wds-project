@@ -5,19 +5,19 @@ import { trpc } from "@/trpc/client";
 
 export default function PostElement({ id }: { id: number }) {
   const router = useRouter();
-  const { data, isFetching, isLoading, isPending } =
-    trpc.getPostById.useQuery(id);
+  const { data, isPending } = trpc.getPostById.useQuery(id);
 
   if (isPending) return <>isPending....</>;
-  if (isLoading) return <>isLoading....</>;
-  if (isFetching) return <>isFetching....</>;
+  if (data && "error" in data) return <>Error...</>;
 
   return (
     <div>
+      <h1 className="text-4xl text-center mb-3">🧻</h1>
+      <h1 className="text-4xl">Fajnie, że wciąż z nami</h1>
       <h1>Title: {data?.title}</h1>
       <div>ID: {data?.id}</div>
       <div>Body: {data?.body}</div>
-      <div>{data?.createdAt.getDay()}</div>
+      <div>{data?.createdAt}</div>
       <hr />
       <button onClick={() => router.back()}>Zamknij</button>
     </div>

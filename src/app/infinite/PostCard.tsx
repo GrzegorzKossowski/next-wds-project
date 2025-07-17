@@ -7,7 +7,7 @@ import {
 } from "../_components/ui/card";
 import { SelectPostTableRow } from "@/drizzle/schema";
 
-export const PostCard = ({ post }: { post: SelectPostTableRow }) => {
+export const PostCard = ({ post }: { post: Omit<SelectPostTableRow, 'createdAt' | 'updatedAt'> }) => {
   const { id, body, title } = post;
   return (
     <Link href={`/infinite/${id}`}>

@@ -26,6 +26,9 @@ export default async function Home() {
         <Link href={"/infinite"} className="bg-zinc-500/30 p-2 m-2">
           Infinite Scroll
         </Link>
+        <Link href={"/loader"} className="bg-zinc-500/30 p-2 m-2">
+          Loader
+        </Link>
       </div>
     </div>
   );
