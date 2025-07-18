@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import ThemeSwitch from "./_components/ThemeSwitch";
 import { LogoutButton } from "./LogoutButton";
 import Link from "next/link";
+import LastPoll from "./polls/LastPoll";
 
 export default async function Home() {
   const session = await auth();
@@ -81,6 +82,17 @@ export default async function Home() {
           </Link>
         </div>
         <div>równoległe sloty z różnych stron źródłowych - np. do CMS</div>
+      </div>
+      <div>
+        <LastPoll label="Last" />
+      </div>
+      <div className="flex flex-row space-x-4">
+        <div>
+          <Link href={"/polls"} className="bg-zinc-500/30 p-2">
+            Polls - sondy
+          </Link>
+        </div>
+        <div>system poslls, na wzór serwisu donald</div>
       </div>
     </div>
   );

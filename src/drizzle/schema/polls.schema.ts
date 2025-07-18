@@ -2,11 +2,17 @@ import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { timestamps } from "./columns.helpers";
 import { relations } from "drizzle-orm";
 
+export type SelectPollTableRow = typeof pollsTable.$inferSelect;
+export type InsertPollTableRow = typeof pollsTable.$inferInsert;
+
 export const pollsTable = pgTable("polls", {
   id: serial("id").primaryKey(),
   question: varchar("title", { length: 512 }).notNull().unique(), // treść pytania
   ...timestamps,
 });
+
+export type SelectPollOptionsTableRow = typeof pollOptionsTable.$inferSelect;
+export type InsertPollOptionsTableRow = typeof pollOptionsTable.$inferInsert;
 
 export const pollOptionsTable = pgTable("poll_options", {
   id: serial("id").primaryKey(),
@@ -23,9 +29,12 @@ export const pollsRelations = relations(pollsTable, ({ many }) => ({
   options: many(pollOptionsTable),
 }));
 
-export const pollOptionsTableRelations = relations(pollOptionsTable, ({ one }) => ({
-  poll: one(pollsTable, {
-    fields: [pollOptionsTable.pollId],
-    references: [pollsTable.id],
-  }),
-}));
+export const pollOptionsTableRelations = relations(
+  pollOptionsTable,
+  ({ one }) => ({
+    poll: one(pollsTable, {
+      fields: [pollOptionsTable.pollId],
+      references: [pollsTable.id],
+    }),
+  })
+);

@@ -15,7 +15,7 @@ export default function PostWrapper() {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = trpc.getInfinitePosts.useInfiniteQuery(
+  } = trpc.posts.getInfinitePosts.useInfiniteQuery(
     { limit: POST_PER_PAGE },
     { getNextPageParam: (lastPage) => lastPage.nextCursor }
   );

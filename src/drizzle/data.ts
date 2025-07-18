@@ -1,6 +1,15 @@
 // polls data
 export const pollSeedData = [
   {
+    title: "Która godzina?",
+    options: [
+      "Bura",
+      "Twoja ostatnia",
+      "Każda dobra w dobrym towarzystwie",
+      "Nie interesuj się",
+    ],
+  },
+  {
     title: "Jaki framework frontendowy preferujesz?",
     options: ["React", "Vue", "Svelte", "Angular"],
   },
@@ -9,8 +18,31 @@ export const pollSeedData = [
     options: ["Windows", "macOS", "Linux"],
   },
   {
-    title: "Czy korzystasz z TypeScript?",
-    options: ["Tak", "Nie"],
+    title: "Gdzie jest słonko, kiedy śpi?",
+    options: ["Na Zachodzie", "Na Wschodzie", "W objęciach Morfeusza"],
+  },
+  {
+    title: "Czy szklanka jest do połowy pełna czy pusta?",
+    options: [
+      "Tak, jest do połowy pełna",
+      "Nie, jest do połowy pełna",
+      "Tak, jest do połowy pusta",
+      "Nie, jest do połowy pusta",
+      "Pomidor ma czerwone usta",
+    ],
+  },
+  {
+    title: "Która rura nie pęka?",
+    options: ["Moja", "Twoja", "Twojej starej"],
+  },
+  {
+    title: "Dokąd tupta nocą jeż?",
+    options: [
+      "Możesz wiedzieć, jeśli chcesz",
+      "Wiem, ale nie powiem",
+      "Nie wiem",
+      "To tajemnica czarowników i czarownic",
+    ],
   },
 ];
 
