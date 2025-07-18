@@ -37,8 +37,8 @@ export default function SignUpForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="flex flex-col w-[350px] space-y-4">
+    <div className="m-4">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-2 w-[350px] p-4 border">
         <input
           type="text"
           name="name"
@@ -71,6 +71,6 @@ export default function SignUpForm() {
           {isPending ? "Rejestruję..." : "Zarejestruj się"}
         </button>
       </form>
-    </>
+    </div>
   );
 }

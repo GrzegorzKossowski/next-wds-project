@@ -19,16 +19,27 @@ export default function PostElement({ id }: { id: number }) {
 
   return (
     <div>
-      <h1 className="text-4xl text-center mb-3">🧻</h1>
-      <h1 className="text-4xl">Fajnie, że wciąż z nami</h1>
-      <h1>Title: {data?.title}</h1>
-      <div>ID: {data?.id}</div>
-      <div>Body: {data?.body}</div>
-      <div>{data?.createdAt}</div>
-      <hr />
-      <div className="w-full text-right">
+      <div className="my-2">
         <button onClick={() => router.back()}>
-          <CircleArrowLeftIcon size={"50"} />
+          <CircleArrowLeftIcon size={"30"} />
+        </button>
+      </div>
+      <h1 className="text-4xl mb-4">Fajnie, że wciąż z nami 🧻</h1>
+      <p>
+        wciąż, ponieważ nastąpiło przekierowanie z listy postów. W przypadku
+        odświeżenia (F5) lub linku zewnętrznego, user trafia na inną stronę,
+        choć z tymi samymi danymi (przez id posta)
+      </p>
+      <div className="border border-amber-300 m-4 p-4">
+        <h4 className="text-xl my-4">Title: {data?.title}</h4>
+        <div className="mb-4">ID: {data?.id}</div>
+        <div className="mb-4">Body: {data?.body}</div>
+        <div className="mb-4">createdAt: {data?.createdAt}</div>
+      </div>
+      <hr />
+      <div className="my-2">
+        <button onClick={() => router.back()}>
+          <CircleArrowLeftIcon size={"30"} />
         </button>
       </div>
     </div>

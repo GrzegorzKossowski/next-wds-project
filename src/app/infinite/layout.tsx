@@ -5,9 +5,11 @@ export default function InfiniteLayout({ children }: PropsWithChildren) {
   return (
     <div>
       <div>
-        <Link href="/" className="bg-zinc-400">Home</Link>
+        <Link href="/" className="bg-zinc-400">
+          Home
+        </Link>
       </div>
-      InfiniteLayout
+      <h1 className="text-4xl">Infinite Layout</h1>
       <div>{children}</div>
     </div>
   );

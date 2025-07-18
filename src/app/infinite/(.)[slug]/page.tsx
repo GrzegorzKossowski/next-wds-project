@@ -10,7 +10,8 @@ export default async function page({
   return (
     <div>
       <div className="text-red-500">INTERCEPTED INFINITE SLUG PAGE</div>
-      <div>page {slug}</div>
+      <div>Post ID: {slug}</div>
+      <p>Strona prezentowana po przejściu z listy postów</p>
       <PostElement id={Number(slug)} />
     </div>
   );

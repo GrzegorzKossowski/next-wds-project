@@ -63,7 +63,8 @@ export default function PostWrapper() {
   return (
     <div className="relative">
       <div className="space-y-6">
-        <h1 className="text-2xl">Posty</h1>
+        <h3 className="text-xl">Posty</h3>
+        <p>kliknięcie posta przekierowuje na stronę konkretnego posta</p>
         <div className="relative grid gap-x-4 gap-y-8 grid-cols-1 md:grid-cols-3">
           {posts.map((post) => (
             <PostCard post={post} key={post.id} />

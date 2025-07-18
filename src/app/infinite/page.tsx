@@ -4,7 +4,7 @@ import PostWrapper from "./PostWrapper";
 export default function InfinitePage() {
   return (
     <div>
-      InfinitePage
+      <h2 className="text-2xl">Infinite Page</h2>
       <div>
         <PostWrapper />
       </div>
