@@ -7,7 +7,7 @@ import GramLoader from "@/app/loader/GramLoader";
 
 export default function PostElement({ id }: { id: number }) {
   const router = useRouter();
-  const { data, isPending } = trpc.getPostById.useQuery(id);
+  const { data, isPending } = trpc.posts.getPostById.useQuery(id);
 
   if (isPending)
     return (

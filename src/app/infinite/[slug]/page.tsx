@@ -9,7 +9,7 @@ export default async function page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const data = await trpc.getPostById(Number(slug));
+  const data = await trpc.posts.getPostById(Number(slug));
   if ("error" in data) return <>Error...</>;
   const { id, body, title, createdAt } = data;
 
